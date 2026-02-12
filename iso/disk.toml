@@ -4,5 +4,5 @@ minsize = "20 GiB"
 
 [[customizations.user]]
 name = "admin"
-password = "$6$rounds=4096$VfG.vJp5S$v6Y8R3sM7K8X1H9q0e5L2G4vJp5S.v6Y8R3sM7K8X1H9q0e5L2G4vJp5S"
+password = "$6$VF9OGhdcgzxC2qs3$ptdToCi.HO0KNWIybUaLpZhPyLO2N6ErLw5jkN/.scCAHsh7h3/fwTvWxq7FuuV8IvfUQUB7Q6dF0mRYkEXPb."
 groups = ["wheel"]
