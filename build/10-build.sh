@@ -43,13 +43,13 @@ echo "::endgroup::"
 
 echo "::group:: Install System Essentials"
 
-dnf5 install -y \
+dnf5 install -y --skip-unavailable\
     pipewire \
     pipewire-pulseaudio \
     wireplumber \
     network-manager-applet \
     nm-connection-editor \
-    polkit-gnome \
+    polkit \
     gnome-keyring \
     google-noto-sans-fonts \
     google-noto-color-emoji-fonts \
