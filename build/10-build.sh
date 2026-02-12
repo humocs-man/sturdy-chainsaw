@@ -59,16 +59,6 @@ dnf5 install -y --skip-unavailable\
 
 echo "::endgroup::"
 
-echo "::group:: Hardware Acceleration"
-
-dnf5 install -y \
-    mesa-va-drivers-freeworld \
-    mesa-vdpau-drivers-freeworld \
-    intel-media-driver \
-    libavcodec-freeworld
-
-echo "::endgroup::"
-
 echo "::group:: COSMIC Desktop"
 
 dnf5 install -y \
@@ -77,12 +67,12 @@ dnf5 install -y \
     cosmic-settings \
     cosmic-terminal \
     cosmic-edit
-echo "::endgroup::"
+echo "::endgroup::COSMIC Desktop"
 
 echo "::group:: Install Packages"
 
 # Install packages using dnf5
-dnf5 install -y \
+#dnf5 install -y \
 
 
 # Example using COPR with isolated pattern:
