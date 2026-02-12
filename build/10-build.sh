@@ -59,12 +59,6 @@ dnf5 install -y --skip-unavailable\
 
 echo "::endgroup::"
 
-echo "::group:: COSMIC Desktop"
-
-dnf5 install -y \
-    @cosmic-desktop-environment 
-    
-echo "::endgroup::COSMIC Desktop"
 
 echo "::group:: Install Packages"
 
@@ -75,6 +69,9 @@ echo "::group:: Install Packages"
 # Example using COPR with isolated pattern:
 copr_install_isolated "ryanabx/patched-rpms" \
 flatpak
+
+copr_install_isolated "ryanabx/cosmic-epoch" \
+cosmic-desktop
 
 
 echo "::endgroup::"
