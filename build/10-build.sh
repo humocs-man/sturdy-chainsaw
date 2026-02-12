@@ -62,11 +62,8 @@ echo "::endgroup::"
 echo "::group:: COSMIC Desktop"
 
 dnf5 install -y \
-    @cosmic-desktop-environment \
-    cosmic-greeter \
-    cosmic-settings \
-    cosmic-terminal \
-    cosmic-edit
+    @cosmic-desktop-environment 
+    
 echo "::endgroup::COSMIC Desktop"
 
 echo "::group:: Install Packages"
