@@ -16,15 +16,15 @@ source /ctx/build/copr-helpers.sh
 # Enable nullglob for all glob operations to prevent failures on empty matches
 shopt -s nullglob
 
-echo "::group:: Copy Bluefin Config from Common"
+# echo "::group:: Copy Bluefin Config from Common"
 
 # Copy just files from @projectbluefin/common (includes 00-entry.just which imports 60-custom.just)
-mkdir -p /usr/share/ublue-os/just/
-shopt -s nullglob
-cp -r /ctx/oci/common/bluefin/usr/share/ublue-os/just/* /usr/share/ublue-os/just/
-shopt -u nullglob
+# mkdir -p /usr/share/ublue-os/just/
+# shopt -s nullglob
+# cp -r /ctx/oci/common/bluefin/usr/share/ublue-os/just/* /usr/share/ublue-os/just/
+# shopt -u nullglob
 
-echo "::endgroup::"
+# echo "::endgroup::"
 
 echo "::group:: Copy Custom Files"
 
@@ -33,7 +33,7 @@ mkdir -p /usr/share/ublue-os/homebrew/
 cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
 
 # Consolidate Just Files
-find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
+# find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
 
 # Copy Flatpak preinstall files
 mkdir -p /etc/flatpak/preinstall.d/
@@ -41,13 +41,54 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
+echo "::group:: Install System Essentials"
+
+dnf5 install -y \
+    pipewire \
+    pipewire-pulseaudio \
+    wireplumber \
+    network-manager-applet \
+    nm-connection-editor \
+    polkit-gnome \
+    gnome-keyring \
+    google-noto-sans-fonts \
+    google-noto-color-emoji-fonts \
+    inter-fonts \
+    libva-utils \
+    vulkan-loader
+
+echo "::endgroup::"
+
+echo "::group:: Hardware Acceleration"
+
+dnf5 install -y \
+    mesa-va-drivers-freeworld \
+    mesa-vdpau-drivers-freeworld \
+    intel-media-driver \
+    libavcodec-freeworld
+
+echo "::endgroup::"
+
+echo "::group:: COSMIC Desktop"
+
+dnf5 install -y \
+    cosmic-desktop \
+    cosmic-greeter \
+    cosmic-settings \
+    cosmic-terminal \
+    cosmic-edit
+echo "::endgroup::"
+
 echo "::group:: Install Packages"
 
 # Install packages using dnf5
-# Example: dnf5 install -y tmux
+dnf5 install -y \
+
 
 # Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
+copr_install_isolated "ryanabx/patched-rpms" \
+flatpak
+
 
 echo "::endgroup::"
 
@@ -55,6 +96,7 @@ echo "::group:: System Configuration"
 
 # Enable/disable systemd services
 systemctl enable podman.socket
+systemctl enable cosmic-greeter.service
 # Example: systemctl mask unwanted-service
 
 echo "::endgroup::"
