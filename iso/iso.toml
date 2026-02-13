@@ -1,35 +1,15 @@
-# Anaconda ISO Installer Configuration
-# Diese Datei erstellt ein bootfähiges ISO, das dein COSMIC-Image enthält.
+[iso]
+# Das Image, das auf die Festplatte installiert werden soll
+image = "ghcr.io/humocs-man/sturdy-chainsaw:stable"
+# Wir nutzen den schicken Readymade-Installer
+installer = "readymade"
 
-[[customizations.user]]
-name = "liveuser"
-# Passwort ist: live
-password = "$6$rounds=4096$tM9.yVp.Ym/f$T6fXQWw0U0m/8p.uR7Z7.f8Oq6vW8Hl8p9G7Z6X6QW8Hl8p9G7Z6X6"
-groups = ["wheel"]
-description = "Temporärer Live-Nutzer"
+[live]
+# Hier sagen wir Titanoboa, dass dein COSMIC-Image die Live-Umgebung stellt
+base_image = "ghcr.io/humocs-man/sturdy-chainsaw:stable"
+# Wichtig für COSMIC: Wir wollen direkt im Desktop landen
+autologin = true
 
-[customizations.installer.kickstart]
-contents = """
-# Hier können zusätzliche Skripte stehen. 
-# Da wir das Image 'embedded' bauen, ist kein 'bootc switch' nötig.
-%post
-echo "Installation abgeschlossen."
-%end
-"""
-
-[customizations.installer.modules]
-# Ermöglicht die manuelle Konfiguration während der Installation
-enable = [
-  "org.fedoraproject.Anaconda.Modules.Storage",    # Festplatten-Partitionierung
-  "org.fedoraproject.Anaconda.Modules.Runtime",    # Grundkonfiguration
-  "org.fedoraproject.Anaconda.Modules.Network",    # Netzwerk/WLAN-Setup
-  "org.fedoraproject.Anaconda.Modules.Security",   # Sicherheitseinstellungen
-  "org.fedoraproject.Anaconda.Modules.Services",   # Systemd-Dienste
-  "org.fedoraproject.Anaconda.Modules.Users",      # Ermöglicht das Anlegen deines echten Users
-  "org.fedoraproject.Anaconda.Modules.Timezone"    # Zeitzonenauswahl
-]
-
-# Deaktiviert die Red Hat Registrierung (nicht nötig für Fedora)
-disable = [
-  "org.fedoraproject.Anaconda.Modules.Subscription",
-]
+[installation]
+# Hier verknüpfen wir deine disk.toml
+config = "disk.toml"
