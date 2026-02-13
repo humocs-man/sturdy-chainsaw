@@ -1,8 +1,25 @@
-[[customizations.filesystem]]
-mountpoint = "/"
-minsize = "20 GiB"
+# Festlegung der Partitionstabelle (GPT ist Standard für UEFI)
+[disk]
+type = "gpt"
 
-[[customizations.user]]
-name = "admin"
-password = "$6$VF9OGhdcgzxC2qs3$ptdToCi.HO0KNWIybUaLpZhPyLO2N6ErLw5jkN/.scCAHsh7h3/fwTvWxq7FuuV8IvfUQUB7Q6dF0mRYkEXPb."
-groups = ["wheel"]
+# 1. EFI Partition (Zwingend erforderlich für den Bootvorgang)
+[[partitions]]
+label = "EFI"
+size = "512 MiB"
+type = "esp"
+mountpoint = "/boot/efi"
+filesystem = "vfat"
+
+# 2. Boot Partition (Hier liegen Kernel und Initramfs)
+[[partitions]]
+label = "boot"
+size = "1 GiB"
+mountpoint = "/boot"
+filesystem = "ext4"
+
+# 3. Root Partition (Dein eigentliches System)
+[[partitions]]
+label = "root"
+size = "0" # "0" bedeutet: Nutze den gesamten restlichen Speicherplatz
+mountpoint = "/"
+filesystem = "btrfs" # Empfohlen für COSMIC/Atomic
