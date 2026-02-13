@@ -1,0 +1,40 @@
+name: Build COSMIC Live ISO
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'iso/disk.toml'
+      - 'iso/iso.toml'
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build ISO using Titanoboa
+        uses: ublue-os/titanoboa@main
+        with:
+          # Pfad zu deinem COSMIC-Image
+          image: ghcr.io/${{ github.repository_owner }}/dein-cosmic-image
+          tag: latest
+          
+          # Hier verweisen wir auf deinen Unterordner
+          iso-config: 'iso/iso.toml'
+          disk-config: 'iso/disk.toml'
+          
+          # Aktiviert den Readymade-Installer
+          variant: 'readymade'
+
+      - name: Upload ISO as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-live-iso
+          path: ./output/*.iso
