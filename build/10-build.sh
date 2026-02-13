@@ -44,18 +44,15 @@ echo "::endgroup::"
 echo "::group:: Install System Essentials"
 
 dnf5 install -y --skip-unavailable\
-    pipewire \
-    pipewire-pulseaudio \
-    wireplumber \
     network-manager-applet \
     nm-connection-editor \
     polkit \
-    gnome-keyring \
     google-noto-sans-fonts \
     google-noto-color-emoji-fonts \
-    inter-fonts \
     libva-utils \
-    vulkan-loader
+    vulkan-loader \
+    anaconda \
+    anaconda-live
 
 echo "::endgroup::"
 
