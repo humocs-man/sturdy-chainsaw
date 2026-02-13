@@ -43,6 +43,8 @@ echo "::endgroup::"
 
 echo "::group:: Install System Essentials"
 
+dnf5 remove -y flatpak
+
 dnf5 install -y --skip-unavailable\
     network-manager-applet \
     nm-connection-editor \
