@@ -33,7 +33,7 @@ mkdir -p /usr/share/ublue-os/homebrew/
 cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
 
 # Consolidate Just Files
-# find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
+find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
 
 # Copy Flatpak preinstall files
 mkdir -p /etc/flatpak/preinstall.d/
@@ -64,11 +64,9 @@ echo "::group:: Install Packages"
 
 
 # Example using COPR with isolated pattern:
-copr_install_isolated "ryanabx/patched-rpms" \
-flatpak
+copr_install_isolated "ryanabx/patched-rpms" flatpak
 
-copr_install_isolated "ryanabx/cosmic-epoch" \
-cosmic-desktop
+copr_install_isolated "ryanabx/cosmic-epoch" cosmic-desktop
 
 
 echo "::endgroup::"
